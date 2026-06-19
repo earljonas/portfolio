@@ -152,13 +152,13 @@ export default function Home() {
                           <p className="text-sm font-medium group-hover:underline flex items-center gap-1.5">
                             IT Specialist – Databases <ExternalLink className="w-3 h-3 text-foreground/40" />
                           </p>
-                          <p className="text-xs text-foreground/60 mt-0.5">Certiport · 2025</p>
+                          <p className="text-xs text-foreground/60 mt-0.5">Certiport · 2026</p>
                         </a>
                         <a href="https://www.udemy.com/certificate/UC-6fadd32d-38ff-4b3a-9f1e-755875a3b2fd/" target="_blank" rel="noreferrer" className="block group">
                           <p className="text-sm font-medium group-hover:underline flex items-center gap-1.5">
                             Full-Stack Web Development <ExternalLink className="w-3 h-3 text-foreground/40" />
                           </p>
-                          <p className="text-xs text-foreground/60 mt-0.5">Udemy · 2025</p>
+                          <p className="text-xs text-foreground/60 mt-0.5">Udemy · 2026</p>
                         </a>
                       </div>
                    </div>
