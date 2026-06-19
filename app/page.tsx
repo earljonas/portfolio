@@ -1,13 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "motion/react";
+import { type FormEvent, useState, useEffect } from "react";
 import { 
   MapPin, 
   Briefcase, 
   GraduationCap, 
   Mail, 
-  Calendar, 
   Users, 
   ChevronRight,
   Info,
@@ -50,6 +48,53 @@ const PROJECT_IMAGES: Record<string, string[]> = {
 export default function Home() {
   const [activeProject, setActiveProject] = useState<string | null>(null);
   const [imgIndex, setImgIndex] = useState(0);
+  const [contactStatus, setContactStatus] = useState("");
+  const [isSending, setIsSending] = useState(false);
+
+  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const name = String(formData.get("name") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    const message = String(formData.get("message") ?? "").trim();
+
+    if (!name || !email || !message) {
+      setContactStatus("Please fill out every field before sending.");
+      return;
+    }
+
+    setIsSending(true);
+    setContactStatus("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error ?? "Unable to send your message right now.");
+      }
+
+      form.reset();
+      setContactStatus("Message sent. Thanks for reaching out.");
+    } catch (error) {
+      setContactStatus(
+        error instanceof Error
+          ? error.message
+          : "Unable to send your message right now."
+      );
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -125,7 +170,7 @@ export default function Home() {
                    </div>
                    <div className="text-sm text-foreground/70 space-y-4 leading-relaxed">
                       <p>
-                        I'm a full-stack developer who loves building things that actually work. 
+                        I&apos;m a full-stack developer who loves building things that actually work. 
                       </p>
                       <p>
                         Currently working my way toward AI engineering, always learning, always building something new.
@@ -185,23 +230,28 @@ export default function Home() {
                       <Mail className="w-5 h-5" />
                       <h2 className="text-lg font-bold">Get in Touch</h2>
                    </div>
-                   <form className="flex flex-col gap-4 flex-1">
+                   <form className="flex flex-col gap-4 flex-1" onSubmit={handleContactSubmit}>
                       <div className="flex flex-col gap-1.5">
-                         <label className="text-xs font-semibold text-foreground/80">Name</label>
-                         <input type="text" placeholder="John Doe" className="px-3 py-2 text-sm border border-border rounded-lg bg-transparent focus:outline-none focus:border-foreground/30 transition-colors" />
+                         <label htmlFor="contact-name" className="text-xs font-semibold text-foreground/80">Name</label>
+                         <input id="contact-name" name="name" type="text" placeholder="John Doe" required className="px-3 py-2 text-sm border border-border rounded-lg bg-transparent focus:outline-none focus:border-foreground/30 transition-colors" />
                       </div>
                       <div className="flex flex-col gap-1.5">
-                         <label className="text-xs font-semibold text-foreground/80">Email</label>
-                         <input type="email" placeholder="john@example.com" className="px-3 py-2 text-sm border border-border rounded-lg bg-transparent focus:outline-none focus:border-foreground/30 transition-colors" />
+                         <label htmlFor="contact-email" className="text-xs font-semibold text-foreground/80">Email</label>
+                         <input id="contact-email" name="email" type="email" placeholder="john@example.com" required className="px-3 py-2 text-sm border border-border rounded-lg bg-transparent focus:outline-none focus:border-foreground/30 transition-colors" />
                       </div>
                       <div className="flex flex-col gap-1.5">
-                         <label className="text-xs font-semibold text-foreground/80">Message</label>
-                         <textarea rows={3} placeholder="How can we work together?" className="px-3 py-2 text-sm border border-border rounded-lg bg-transparent focus:outline-none focus:border-foreground/30 transition-colors resize-none"></textarea>
+                         <label htmlFor="contact-message" className="text-xs font-semibold text-foreground/80">Message</label>
+                         <textarea id="contact-message" name="message" rows={3} placeholder="How can we work together?" required className="px-3 py-2 text-sm border border-border rounded-lg bg-transparent focus:outline-none focus:border-foreground/30 transition-colors resize-none"></textarea>
                       </div>
-                      <button type="button" className="mt-auto flex items-center justify-center gap-2 bg-foreground text-background px-4 py-2.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+                      <button type="submit" disabled={isSending} className="mt-auto flex items-center justify-center gap-2 bg-foreground text-background px-4 py-2.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity disabled:cursor-not-allowed disabled:opacity-60">
                          <Send className="w-4 h-4" />
-                         Send Message
+                         {isSending ? "Sending..." : "Send Message"}
                       </button>
+                      {contactStatus && (
+                        <p className="text-xs text-foreground/60" role="status">
+                          {contactStatus}
+                        </p>
+                      )}
                    </form>
                 </div>
 
@@ -268,13 +318,13 @@ export default function Home() {
                            className="w-full h-48 bg-foreground/5 rounded-lg mb-3 overflow-hidden border border-border cursor-pointer relative"
                            onClick={() => { setActiveProject("anvys-hub"); setImgIndex(0); }}
                          >
-                           <img src={PROJECT_IMAGES["anvys-hub"][0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Anvy's Hub Business Platform" />
+                           <img src={PROJECT_IMAGES["anvys-hub"][0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={"Anvy's Hub Business Platform"} />
                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                               <span className="opacity-0 group-hover:opacity-100 bg-black text-white text-xs px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-all">View Gallery ({PROJECT_IMAGES["anvys-hub"].length})</span>
                            </div>
                          </div>
                          <a href="https://github.com/earljonas/anvys-hub" target="_blank" className="block">
-                           <h3 className="font-bold text-sm mb-1 hover:underline">Anvy's Hub</h3>
+                           <h3 className="font-bold text-sm mb-1 hover:underline">Anvy&apos;s Hub</h3>
                            <p className="text-xs text-foreground/50 mb-2">Laravel · React · MySQL · Docker</p>
                            <p className="text-sm text-foreground/70 leading-relaxed">Business management platform with inventory, payroll, POS, event booking, and role-based access control.</p>
                          </a>
