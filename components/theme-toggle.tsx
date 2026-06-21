@@ -15,11 +15,22 @@ export function ThemeToggle() {
 
   if (!mounted) return <div className="w-10 h-10 rounded-xl border border-border bg-background"></div>;
 
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    if (!document.startViewTransition) {
+      setTheme(nextTheme);
+      return;
+    }
+    document.startViewTransition(() => {
+      setTheme(nextTheme);
+    });
+  };
+
   return (
     <button
       aria-label="Toggle theme"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="flex items-center justify-center w-10 h-10 rounded-xl border border-border bg-background text-foreground/70 hover:bg-foreground/5 hover:text-foreground transition-all duration-300 cursor-pointer"
+      onClick={toggleTheme}
+      className="flex items-center justify-center w-10 h-10 rounded-xl border border-border bg-background text-foreground/70 hover:bg-foreground/5 hover:text-foreground active:scale-90 transition-all duration-300 cursor-pointer"
       title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
       {theme === "dark" ? (

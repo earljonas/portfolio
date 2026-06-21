@@ -114,8 +114,8 @@ export default function Home() {
           <section className="flex flex-col md:flex-row justify-between items-start gap-6 w-full relative">
              
              <div className="flex flex-col md:flex-row gap-6 items-start">
-               <div className="w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-2xl border border-border overflow-hidden bg-background flex items-center justify-center text-4xl font-bold">
-                 EJ
+               <div className="w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-2xl border border-border overflow-hidden bg-background flex items-center justify-center text-4xl font-bold relative">
+                 <img src="/profile.png" alt="Profile Photo" className="w-full h-full object-cover" />
                </div>
                
                <div className="flex flex-col pt-1">
