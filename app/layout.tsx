@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { Chatbot } from "@/components/chatbot";
 import "./globals.css";
 
 const geist = Geist({
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className="min-h-dvh">
         <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
           {children}
+          <Chatbot />
         </ThemeProvider>
       </body>
     </html>
