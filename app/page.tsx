@@ -170,10 +170,10 @@ export default function Home() {
                    </div>
                    <div className="text-sm text-foreground/70 space-y-4 leading-relaxed">
                       <p>
-                        I&apos;m a full-stack developer who loves building things that actually work. 
+                        I&apos;m a Computer Science student specializing in full-stack development and AI integration. 
                       </p>
                       <p>
-                        Currently working my way toward AI engineering, always learning, always building something new.
+                        I love building things that actually work, and I am currently seeking a software engineering internship to apply my hands-on experience in building production-grade web applications.
                       </p>
                    </div>
                 </div>
@@ -216,7 +216,7 @@ export default function Home() {
                       <h2 className="text-lg font-bold">Tech Stack</h2>
                    </div>
                    <div className="flex flex-wrap gap-2">
-                      {["Next.js", "React", "TypeScript", "Python", "FastAPI", "Laravel", "Supabase", "PostgreSQL", "Docker"].map((tech) => (
+                      {["Next.js", "React", "TypeScript", "JavaScript", "Python", "FastAPI", "Laravel", "Node.js", "Express.js", "Tailwind CSS", "MySQL", "PostgreSQL", "Supabase", "Docker", "Git"].map((tech) => (
                         <span key={tech} className="px-3 py-1.5 text-xs font-medium border border-border rounded-lg text-foreground/80 hover:bg-foreground/5 transition-colors cursor-default">
                           {tech}
                         </span>
@@ -349,10 +349,24 @@ export default function Home() {
                          </div>
                          <div className="flex-1">
                             <div className="flex justify-between items-start">
-                               <h3 className="font-bold text-sm">Freelance Photo Editor</h3>
-                               <span className="text-xs text-foreground/60">2022</span>
+                               <h3 className="font-bold text-sm">Sales Team Member</h3>
+                               <span className="text-xs text-foreground/60">2024 - 2025</span>
                             </div>
-                            <p className="text-sm text-foreground/60 mt-0.5">E-commerce · Photoshop</p>
+                            <p className="text-sm text-foreground/60 mt-0.5"><a href="https://drive.google.com/file/d/1jKdimwWVGv8M6XXFNYMd3SqP1JccATEV/view?usp=sharing" target="_blank" rel="noreferrer" className="hover:underline">Only Growth Agency</a> · Remote</p>
+                         </div>
+                      </div>
+
+                      {/* Item 2 */}
+                      <div className="flex gap-4">
+                         <div className="mt-1.5 flex-shrink-0">
+                            <div className="w-1.5 h-1.5 rounded-full border border-foreground/40"></div>
+                         </div>
+                         <div className="flex-1">
+                            <div className="flex justify-between items-start">
+                               <h3 className="font-bold text-sm">Freelance Photo Editor</h3>
+                               <span className="text-xs text-foreground/60">2022 - 2024</span>
+                            </div>
+                            <p className="text-sm text-foreground/60 mt-0.5">Self-Employed · E-commerce</p>
                          </div>
                       </div>
                    </div>
